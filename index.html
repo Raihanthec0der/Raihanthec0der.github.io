@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD Abdullah Al Raihan — Data Science Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12241F;
+    --ink-soft:#1B332C;
+    --paper:#ECE8DD;
+    --paper-hi:#F5F2E8;
+    --chalk:#F5F2E8;
+    --sage:#5C7A6E;
+    --sage-dim:#3E5A4F;
+    --signal:#E0A83E;
+    --signal-dim:#B9862B;
+    --line:#33493F;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.55;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--signal);}
+  .eyebrow.on-paper{color:var(--sage-dim);}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(18,36,31,0.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:16px;}
+  .brand{font-family:var(--font-display);font-weight:700;color:var(--chalk);font-size:18px;letter-spacing:0.01em;}
+  .brand span{color:var(--signal);}
+  .navlinks{display:none;gap:28px;list-style:none;margin:0;padding:0;}
+  .navlinks a{font-family:var(--font-mono);font-size:13px;color:var(--chalk);opacity:0.75;text-decoration:none;padding:6px 2px;border-bottom:1px solid transparent;}
+  .navlinks a:hover, .navlinks a:focus-visible{opacity:1;border-color:var(--signal);}
+  @media (min-width:760px){.navlinks{display:flex;}}
+
+  header.hero{
+    background:linear-gradient(var(--ink), var(--ink)),
+      repeating-linear-gradient(0deg, rgba(245,242,232,0.035) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, rgba(245,242,232,0.035) 0 1px, transparent 1px 28px);
+    color:var(--chalk);padding:76px 0 64px;border-bottom:1px solid var(--line);
+  }
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
+  @media (min-width:860px){.hero-grid{grid-template-columns:1.05fr 1fr;gap:24px;}}
+  .hero-eyebrow{margin-bottom:18px;}
+  h1.hero-name{font-family:var(--font-display);font-weight:700;font-size:clamp(34px,5.4vw,52px);line-height:1.08;margin:0 0 14px;letter-spacing:-0.01em;}
+  h1.hero-name em{font-style:normal;color:var(--signal);}
+  .hero-role{font-family:var(--font-mono);font-size:14.5px;color:var(--sage);margin:0 0 22px;}
+  .hero-bio{font-size:16px;color:rgba(245,242,232,0.86);max-width:48ch;margin:0 0 30px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;}
+  .btn{font-family:var(--font-mono);font-size:13.5px;padding:12px 20px;border-radius:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease, background .15s ease, border-color .15s ease;}
+  .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .btn-primary{background:var(--signal);color:var(--ink);font-weight:600;}
+  .btn-primary:hover{transform:translateY(-1px);background:var(--signal-dim);}
+  .btn-ghost{border-color:var(--sage);color:var(--chalk);}
+  .btn-ghost:hover{border-color:var(--chalk);transform:translateY(-1px);}
+
+  .hero-chart-panel{background:var(--ink-soft);border:1px solid var(--line);border-radius:4px;padding:20px 18px 16px;}
+  .hero-chart-label{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-mono);font-size:11px;color:var(--sage);margin-bottom:10px;letter-spacing:0.05em;text-transform:uppercase;}
+  .hero-chart-panel svg{display:block;width:100%;height:auto;}
+  .hbar-track{fill:rgba(245,242,232,0.08);}
+  .hbar-fill{fill:var(--signal-dim);}
+  .hbar-fill.strong{fill:var(--signal);}
+  .hbar-label{font-family:var(--font-mono);font-size:12.5px;fill:var(--chalk);}
+  .hbar-value{font-family:var(--font-mono);font-size:12.5px;fill:var(--chalk);font-weight:600;}
+  .hbar-g1{animation:growbar1 1.4s cubic-bezier(.3,0,.2,1) forwards .3s;}
+  .hbar-g2{animation:growbar2 1.4s cubic-bezier(.3,0,.2,1) forwards .6s;}
+  .hbar-g1, .hbar-g2{transform:scaleX(0);transform-origin:left;}
+  @keyframes growbar1{to{transform:scaleX(1);}}
+  @keyframes growbar2{to{transform:scaleX(1);}}
+  .chart-annot{opacity:0;animation:fadein .6s ease forwards 2.1s;}
+  .chart-annot text{font-family:var(--font-mono);font-size:11px;fill:var(--signal);}
+  .chart-annot path{fill:none;stroke:var(--signal);stroke-width:1.2;opacity:0.8;}
+  .hero-chart-source{opacity:0;animation:fadein .6s ease forwards 2.3s;font-family:var(--font-mono);font-size:10.5px;fill:var(--sage);}
+  @keyframes fadein{to{opacity:1;}}
+
+  section{padding:72px 0;}
+  section.ink{background:var(--ink);color:var(--chalk);border-bottom:1px solid var(--line);}
+  .section-head{margin-bottom:40px;max-width:62ch;}
+  h2.section-title{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3.2vw,32px);margin:10px 0 12px;letter-spacing:-0.005em;}
+  .section-sub{color:var(--sage-dim);font-size:15px;}
+  section.ink .section-sub{color:var(--sage);}
+
+  .radar-wrap{display:grid;grid-template-columns:1fr;gap:36px;}
+  @media (min-width:820px){.radar-wrap{grid-template-columns:0.9fr 1.1fr;align-items:center;}}
+  #radarSvg{width:100%;height:auto;}
+  .radar-axis-label{font-family:var(--font-mono);font-size:11px;fill:var(--sage-dim);cursor:pointer;}
+  .radar-axis-label:hover, .radar-axis-label.active{fill:var(--ink);font-weight:600;}
+  .radar-poly{fill:rgba(224,168,62,0.22);stroke:var(--signal-dim);stroke-width:2;transition:opacity .2s;}
+  .radar-ring{fill:none;stroke:rgba(51,73,63,0.18);}
+  .radar-point{fill:var(--signal-dim);stroke:var(--paper);stroke-width:2;cursor:pointer;transition:r .15s;}
+  .radar-point:hover, .radar-point.active{fill:var(--signal);}
+  .skill-detail{background:var(--paper-hi);border:1px solid rgba(51,73,63,0.18);border-left:3px solid var(--signal);border-radius:2px;padding:22px 24px;min-height:200px;}
+  .skill-detail h3{font-family:var(--font-display);margin:0 0 4px;font-size:20px;}
+  .skill-detail .lvl{font-family:var(--font-mono);font-size:12px;color:var(--sage-dim);margin-bottom:6px;}
+  .skill-detail .note{font-size:13.5px;color:#3a3a34;margin:0 0 12px;font-style:italic;}
+  .skill-detail ul{margin:0;padding-left:18px;font-size:14.5px;}
+  .skill-detail li{margin-bottom:6px;}
+  .skill-hint{font-family:var(--font-mono);font-size:12.5px;color:var(--sage-dim);margin-top:10px;}
+
+  .entry{border:1px solid rgba(51,73,63,0.2);background:var(--paper-hi);border-radius:3px;margin-bottom:22px;overflow:hidden;}
+  .entry-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .entry-head:focus-visible{outline:2px solid var(--signal-dim);outline-offset:-2px;}
+  .entry-num{font-family:var(--font-mono);font-size:12px;color:var(--signal-dim);display:block;margin-bottom:4px;letter-spacing:0.08em;}
+  .entry-title{font-family:var(--font-display);font-size:19px;font-weight:600;margin:0;}
+  .entry-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .tag{font-family:var(--font-mono);font-size:10.5px;color:var(--sage-dim);border:1px solid rgba(51,73,63,0.25);padding:2px 8px;border-radius:10px;}
+  .chevron{font-family:var(--font-mono);font-size:20px;color:var(--sage-dim);transition:transform .25s;flex-shrink:0;}
+  .entry.open .chevron{transform:rotate(45deg);}
+  .entry-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .entry.open .entry-body{max-height:2000px;}
+  .entry-body-inner{padding:0 24px 26px;border-top:1px dashed rgba(51,73,63,0.25);margin-top:2px;}
+  .case-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px;}
+  @media (min-width:700px){.case-grid{grid-template-columns:1fr 1fr;}}
+  .case-field .label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--signal-dim);margin-bottom:5px;}
+  .case-field p, .case-field ul{margin:0;font-size:14.5px;}
+  .case-field ul{padding-left:18px;}
+  .case-field li{margin-bottom:4px;}
+  .entry-links{margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;}
+  .entry-links a{font-family:var(--font-mono);font-size:12.5px;color:var(--signal-dim);text-decoration:none;border-bottom:1px solid var(--signal-dim);padding-bottom:1px;}
+  .entry-links a:hover{color:var(--signal);border-color:var(--signal);}
+
+  .cmp-block{margin-top:22px;background:var(--ink-soft);border-radius:4px;padding:18px 20px;color:var(--chalk);}
+  .cmp-toggle{display:flex;align-items:center;gap:12px;margin-bottom:16px;font-family:var(--font-mono);font-size:12.5px;flex-wrap:wrap;}
+  .switch{position:relative;width:46px;height:24px;background:var(--sage-dim);border-radius:12px;cursor:pointer;border:none;flex-shrink:0;}
+  .switch:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--chalk);transition:transform .25s ease;}
+  .switch.after::after{transform:translateX(22px);background:var(--signal);}
+  .cmp-bars{display:flex;align-items:flex-end;gap:14px;height:110px;margin-bottom:10px;}
+  .cmp-bar-col{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+  .cmp-bar{width:100%;max-width:44px;background:var(--sage);border-radius:2px 2px 0 0;transition:height .5s cubic-bezier(.4,0,.2,1), background .3s;}
+  .cmp-bar-col span{font-family:var(--font-mono);font-size:10px;color:var(--sage);text-align:center;}
+  .cmp-caption{font-size:13px;color:rgba(245,242,232,0.8);margin:0;}
+  .cmp-source{font-size:11px;color:var(--sage);margin:6px 0 0;}
+
+  .builds-head{margin:56px 0 18px;}
+  .builds-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media (min-width:700px){.builds-grid{grid-template-columns:repeat(3,1fr);}}
+  .build-card{border:1px solid rgba(51,73,63,0.2);background:var(--paper-hi);border-radius:3px;padding:16px 18px;}
+  .build-card h4{font-family:var(--font-display);font-size:15px;margin:0 0 6px;}
+  .build-card p{font-size:13px;color:#3a3a34;margin:0 0 10px;}
+  .build-card .tag{margin-right:4px;}
+  .build-card a{font-family:var(--font-mono);font-size:11.5px;color:var(--signal-dim);text-decoration:none;border-bottom:1px solid var(--signal-dim);}
+  .build-card a:hover{color:var(--signal-dim);}
+
+  .notes-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media (min-width:700px){.notes-grid{grid-template-columns:repeat(3,1fr);}}
+  .note-card{border:1px solid rgba(51,73,63,0.2);background:var(--paper-hi);border-radius:3px;padding:20px;}
+  .note-card .date{font-family:var(--font-mono);font-size:11px;color:var(--signal-dim);}
+  .note-card h4{font-family:var(--font-display);font-size:16px;margin:8px 0 8px;}
+  .note-card p{font-size:13.5px;color:#3a3a34;margin:0 0 12px;}
+  .quiz-mini{font-family:var(--font-mono);font-size:12px;}
+  .quiz-mini button{font-family:var(--font-mono);font-size:11.5px;background:none;border:1px solid rgba(51,73,63,0.3);padding:4px 10px;border-radius:10px;margin-right:6px;cursor:pointer;}
+  .quiz-mini button.correct{background:var(--signal);border-color:var(--signal-dim);}
+
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+  @media (min-width:820px){.contact-grid{grid-template-columns:1fr 1fr;}}
+  .social-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+  .social-list a{display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--chalk);font-family:var(--font-mono);font-size:14px;}
+  .social-list a:hover, .social-list a:focus-visible{color:var(--signal);}
+  .social-list .arrow{opacity:0.5;}
+  .social-note{font-family:var(--font-mono);font-size:11.5px;color:var(--sage);margin-top:14px;}
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field label{display:block;font-family:var(--font-mono);font-size:11.5px;color:var(--sage);margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;}
+  .field input, .field textarea{width:100%;background:var(--ink-soft);border:1px solid var(--line);color:var(--chalk);padding:11px 12px;border-radius:2px;font-family:var(--font-body);font-size:14.5px;}
+  .field input:focus-visible, .field textarea:focus-visible{outline:2px solid var(--signal);outline-offset:1px;}
+  .field textarea{resize:vertical;min-height:90px;}
+  .field-error{font-family:var(--font-mono);font-size:11.5px;color:var(--signal);margin-top:5px;min-height:14px;}
+  .form-status{font-family:var(--font-mono);font-size:13px;color:var(--signal);min-height:18px;}
+
+  footer{padding:28px 0;background:var(--ink);border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  footer p{font-family:var(--font-mono);font-size:12px;color:var(--sage);margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">RAIHAN<span>.</span></div>
+    <ul class="navlinks">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Notebook</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow hero-eyebrow">Data Science Student — Field Notes, Vol. 01</p>
+      <h1 class="hero-name">Math background.<br>Python habit.<br>Looking for the <em>signal</em>.</h1>
+      <p class="hero-role">MD Abdullah Al Raihan · B.Sc. Mathematics, Begum Rokeya University · Rangpur, Bangladesh</p>
+      <p class="hero-bio">
+        Mathematics undergraduate with a Math Olympiad background and a habit of turning raw spreadsheets into
+        decisions — sales profitability breakdowns, student-performance correlations, personal expense trends.
+        Looking for an entry-level Data Analyst role, with machine learning engineering as the next step.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#work">See the notebook →</a>
+        <a class="btn btn-ghost" href="mailto:mat1904057@gmail.com">Email me</a>
+      </div>
+    </div>
+
+    <div class="hero-chart-panel">
+      <div class="hero-chart-label"><span>fig. 1 — what predicts a final grade?</span><span>n = 395 students</span></div>
+      <svg viewBox="0 0 440 150" role="img" aria-label="Bar chart comparing correlation of first-period grade G1 and second-period grade G2 with final grade G3. G1 correlates at 0.801, G2 at 0.905, the stronger predictor.">
+        <text class="hbar-label" x="0" y="30">G1 → G3</text>
+        <rect class="hbar-track" x="0" y="42" width="440" height="20" rx="2"></rect>
+        <rect class="hbar-fill hbar-g1" x="0" y="42" width="353" height="20" rx="2"></rect>
+        <text class="hbar-value" x="360" y="57">0.801</text>
+
+        <text class="hbar-label" x="0" y="92">G2 → G3</text>
+        <rect class="hbar-track" x="0" y="104" width="440" height="20" rx="2"></rect>
+        <rect class="hbar-fill strong hbar-g2" x="0" y="104" width="399" height="20" rx="2"></rect>
+        <text class="hbar-value" x="406" y="119">0.905</text>
+
+        <g class="chart-annot">
+          <path d="M280,100 Q300,85 320,90"></path>
+          <text x="200" y="82">strongest single predictor</text>
+        </g>
+        <text class="hero-chart-source" x="0" y="145">source: Student-performance-analysis, github.com/Raihanthec0der</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow on-paper">01 · Instrument panel</p>
+      <h2 class="section-title">Skill heatmap</h2>
+      <p class="section-sub">Click a spoke to see where each skill actually comes from — a shipped project, coursework, or a certificate I'm still building on.</p>
+    </div>
+    <div class="radar-wrap">
+      <svg id="radarSvg" viewBox="0 0 380 380"></svg>
+      <div>
+        <div id="skillDetail" class="skill-detail"></div>
+        <p class="skill-hint">↑ click any label or point on the chart</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="ink">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">02 · Lab notebook</p>
+      <h2 class="section-title">Data analysis projects</h2>
+      <p class="section-sub">Every entry links to the actual repo. Where a project produced a real comparison, toggle the switch to see both sides of it.</p>
+    </div>
+    <div id="entries"></div>
+
+    <div class="builds-head">
+      <p class="eyebrow">03 · Also on GitHub</p>
+      <h2 class="section-title" style="font-size:22px;">Smaller programming builds</h2>
+      <p class="section-sub" style="max-width:70ch;">Not data science work, but they show range: GUI apps, game logic, safe expression parsing.</p>
+    </div>
+    <div id="buildsGrid" class="builds-grid"></div>
+  </div>
+</section>
+
+<section id="notes">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow on-paper">04 · Margin notes</p>
+      <h2 class="section-title">What the projects actually taught me</h2>
+      <p class="section-sub">Short reflections, each tied to a real finding above.</p>
+    </div>
+    <div class="notes-grid">
+      <div class="note-card">
+        <span class="date">From: Sales-Profitability-Analysis</span>
+        <h4>A discount isn't free</h4>
+        <p>Discount rate and profit on Tables came out to roughly −0.667 correlation. It's a reminder that "more discount, more volume" doesn't automatically mean "more profit" — worth checking before recommending a promotion.</p>
+      </div>
+      <div class="note-card">
+        <span class="date">From: Student-performance-analysis</span>
+        <h4>The best predictor was already in the data</h4>
+        <p>G2 (second-period grade) correlated with the final grade at 0.905 — stronger than failures, absences, or parental education combined. Sometimes the strongest feature is just "what happened most recently."</p>
+      </div>
+      <div class="note-card">
+        <span class="date">From: sales-data-cleaning-analysis</span>
+        <h4>Cleaning takes longer than charting</h4>
+        <p>Most of the actual time on that project went into handling missing values and type conversions — the visualization step at the end was the fast part. I now budget time accordingly.</p>
+        <div class="quiz-mini">
+          <p style="margin:0 0 8px;">Quick check: a correlation of −0.667 between discount and profit means discounts...</p>
+          <button data-correct="1" data-q="q1">Are correlated, not proven to cause the loss</button>
+          <button data-correct="0" data-q="q1">Definitely cause the loss</button>
+          <div id="q1-result" style="margin-top:8px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="ink">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">05 · Sign-off</p>
+      <h2 class="section-title">Get in touch</h2>
+      <p class="section-sub">Real links only — add LinkedIn or Kaggle here once you're set up on them.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <ul class="social-list" id="socialList"></ul>
+        <p class="social-note">Certifications: HP LIFE — Data Science &amp; Analytics (Oct 2025) · Grameenphone Academy / CodersTrust — AI &amp; ML Fundamentals (Nov 2025) · DataCamp — Introduction to SQL (Nov 2025) · UniAthena / Cambridge International — Basics of Python (Feb 2026)</p>
+      </div>
+      <form id="contactForm" novalidate>
+        <div class="field">
+          <label for="fname">Name</label>
+          <input id="fname" name="name" type="text" autocomplete="name">
+          <div class="field-error" id="err-name"></div>
+        </div>
+        <div class="field">
+          <label for="femail">Email</label>
+          <input id="femail" name="email" type="email" autocomplete="email">
+          <div class="field-error" id="err-email"></div>
+        </div>
+        <div class="field">
+          <label for="fmsg">Message</label>
+          <textarea id="fmsg" name="message"></textarea>
+          <div class="field-error" id="err-message"></div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 MD Abdullah Al Raihan.</p>
+    <p>Rangpur, Bangladesh · Open to entry-level Data Analyst / Data Science roles</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   CONTENT DATA
+   Every section below reads from one of these arrays/objects. To add,
+   remove, or edit content later, only touch the data here — the rendering
+   code further down does not need to change.
+   ========================================================================= */
+
+// ---- CONTACT LINKS -----------------------------------------------------
+// Add a new { label, href } object for LinkedIn, Kaggle, a hosted resume
+// PDF, etc. as soon as you have the real link. Do not add placeholder URLs.
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/Raihanthec0der" },
+  { label: "Email", href: "mailto:mat1904057@gmail.com" },
+];
+
+// ---- SKILLS (radar chart) ----------------------------------------------
+// level: 1-5, honestly reflecting evidence (a shipped project > a course
+// certificate > a listed-only skill). source: where the level comes from.
+// items: what shows up when this skill is clicked.
+const skills = [
+  { name:"Python", level:5,
+    source:"Primary language across every project below.",
+    items:["Sales-Profitability-Analysis","Student-performance-analysis","scientific-calculator","Snake-game"] },
+  { name:"Pandas / NumPy", level:4,
+    source:"Used for cleaning and aggregating every analysis project.",
+    items:["Sales-Profitability-Analysis","Student-performance-analysis","sales-data-cleaning-analysis","Personal-Expense-Analyzer"] },
+  { name:"Data Viz (Matplotlib)", level:4,
+    source:"Charts generated in each analysis project's output.",
+    items:["Sales-Profitability-Analysis","Student-performance-analysis","Personal-Expense-Analyzer"] },
+  { name:"Statistics & Math", level:4,
+    source:"B.Sc. Mathematics coursework + Math Olympiad background, applied directly in correlation analysis.",
+    items:["Student-performance-analysis (G1/G2/G3 correlations)","Sales-Profitability-Analysis (discount–profit correlation)"] },
+  { name:"SQL", level:2,
+    source:"DataCamp — Introduction to SQL (Nov 2025). Not yet applied in a public project.",
+    items:["DataCamp: Introduction to SQL (certificate)"] },
+  { name:"Machine Learning", level:2,
+    source:"HP LIFE and Grameenphone Academy / CodersTrust certificates. Scikit-learn is installed and studied, not yet used in a shipped model.",
+    items:["HP LIFE: Data Science & Analytics","Grameenphone Academy / CodersTrust: AI & ML Fundamentals"] },
+  { name:"Power BI / Excel", level:2,
+    source:"Listed technical skill from coursework; no public dashboard yet.",
+    items:["Add a project here once published"] },
+  { name:"C / C++", level:3,
+    source:"Algorithm design and discrete math foundations from the Mathematics degree.",
+    items:["Coursework: algorithm design, discrete & applied mathematics"] },
+];
+
+// ---- FEATURED CASE STUDIES (the notebook entries) ----------------------
+// Add a new object to this array to add a project card. Leave `compare`
+// as null if the project has no two real numbers worth comparing —
+// the comparison toggle will simply not render for that entry.
+const caseStudies = [
+  {
+    num: "Entry 01",
+    title: "Where sales profitability breaks down",
+    tags: ["Python", "Pandas", "Matplotlib", "EDA"],
+    repo: "https://github.com/Raihanthec0der/Sales-Profitability-Analysis",
+    problem: "A sales dataset looked healthy in total revenue, but it wasn't clear which categories, products, or discount levels were quietly losing money.",
+    approach: "Aggregated sales and profit by category, sub-category, product, and region in Pandas; isolated orders with negative profit; checked how discount level related to profit margin.",
+    findings: [
+      "Technology was the largest category at roughly $839,893 in total sales.",
+      "1,901 orders (about 18.65% of all orders) were loss-making.",
+      "Office Supplies had the most loss-making orders (898); Furniture had the largest total dollar loss (~$61,675), concentrated in items like Tables.",
+      "For Tables specifically, discount and profit correlated at about −0.667 — heavier discounting tracked with lower profitability."
+    ],
+    takeaway: "The headline revenue number was hiding a real profitability problem in specific categories and discount bands — the kind of thing a single top-line KPI won't show.",
+    compare: {
+      labelA: "By order count", labelB: "By dollar loss",
+      barsA: [ {v:20, label:"Furniture"}, {v:90, label:"Office Sup."}, {v:30, label:"Technology"} ],
+      barsB: [ {v:95, label:"Furniture"}, {v:40, label:"Office Sup."}, {v:25, label:"Technology"} ],
+      captionA: "Office Supplies has the highest number of loss-making orders (898).",
+      captionB: "Furniture carries the largest total dollar loss (~$61,675), driven by Tables.",
+      source: "Figures approximate the proportions reported in the project README."
+    }
+  },
+  {
+    num: "Entry 02",
+    title: "What actually predicts a student's final grade",
+    tags: ["Python", "Pandas", "Matplotlib", "Correlation Analysis"],
+    repo: "https://github.com/Raihanthec0der/Student-performance-analysis",
+    problem: "A dataset of 395 students had grades, study time, failures, absences, and parental education — but no clear read on which factors actually mattered for the final grade (G3).",
+    approach: "Ran descriptive statistics and correlation analysis across all numeric fields, then visualized the strongest relationships: prior grades, past failures, and absences against G3.",
+    findings: [
+      "G1 (first-period grade) correlated with G3 at 0.801.",
+      "G2 (second-period grade) correlated with G3 at 0.905 — the strongest single predictor found.",
+      "Average G3 dropped steadily with more past failures: 11.25 (0 failures) → 8.12 (1) → 6.24 (2) → 5.69 (3+).",
+      "Absences barely correlated with G3 (about 0.034) — much weaker than expected."
+    ],
+    takeaway: "Recent performance (G2) was a far better signal than background factors like absences. It's a useful reminder to test assumptions about what \"should\" matter before building on them.",
+    compare: {
+      labelA: "G1 correlation", labelB: "G2 correlation",
+      barsA: [ {v:80, label:"G1 → G3"} ],
+      barsB: [ {v:90, label:"G2 → G3"} ],
+      captionA: "G1 (first-period grade) correlates with the final grade at 0.801.",
+      captionB: "G2 (second-period grade) correlates with the final grade at 0.905 — the stronger predictor.",
+      source: "Correlation coefficients as reported in the project README."
+    }
+  },
+  {
+    num: "Entry 03",
+    title: "Turning a personal expense CSV into a spending picture",
+    tags: ["Python", "Pandas", "Matplotlib"],
+    repo: "https://github.com/Raihanthec0der/Personal-Expense-Analyzer",
+    problem: "A raw CSV of personal expenses doesn't tell you anything on its own — no totals, no trend, no sense of where the money actually goes.",
+    approach: "Built reusable functions to load and clean the CSV, group and aggregate spending by category and day, and auto-generate charts (category breakdown, daily trend, top-5 spending items) into an outputs folder.",
+    findings: [
+      "Produces a total-expense summary, a daily spending trend, and a category breakdown on every run.",
+      "Surfaces the top-5 highest spending items automatically, without manual sorting."
+    ],
+    takeaway: "Building this as reusable functions (not a one-off script) meant I could point it at a new month's CSV and get the same charts back immediately — worth doing even for a small personal tool.",
+    compare: null
+  },
+  {
+    num: "Entry 04",
+    title: "Cleaning a sales dataset before anyone analyzes it",
+    tags: ["Python", "Pandas", "NumPy", "Data Cleaning"],
+    repo: "https://github.com/Raihanthec0der/sales-data-cleaning-analysis",
+    problem: "Raw sales data is rarely analysis-ready — missing values and inconsistent types will quietly break any aggregation or chart built on top of it.",
+    approach: "Wrote preprocessing scripts to handle missing values and correct data types, preparing the dataset for downstream exploratory analysis.",
+    findings: [
+      "Established a repeatable cleaning step ahead of the profitability analysis in Entry 01."
+    ],
+    takeaway: "This project was less about a finding and more about the discipline of not skipping the cleaning step — it's the part that makes every later chart trustworthy.",
+    compare: null
+  }
+];
+
+// ---- SMALLER BUILDS (compact cards, not full case studies) -------------
+const smallBuilds = [
+  { name:"Scientific Calculator", tags:["Python","Tkinter"], desc:"GUI calculator with AST-based safe expression parsing (no eval()), complex-number support, and calculation history.", repo:"https://github.com/Raihanthec0der/scientific-calculator" },
+  { name:"Snake Game", tags:["Python","Pygame"], desc:"Classic Snake with collision detection, scoring, and multiple difficulty levels.", repo:"https://github.com/Raihanthec0der/Snake-game" },
+  { name:"Text-to-Speech App", tags:["Python","pyttsx3","Tkinter"], desc:"Desktop TTS app with play/pause/resume, voice selection, and speed/volume control using multithreading.", repo:"https://github.com/Raihanthec0der/text-to-speech-program" },
+  { name:"MoneyQuest", tags:["Python"], desc:"A gamified savings tracker with levels, badges, and goal tracking to make saving money feel like a game.", repo:"https://github.com/Raihanthec0der/MoneyQuest" },
+  { name:"BMI Calculator", tags:["Python"], desc:"Calculates BMI from weight and height (with feet+inches conversion) and classifies the result.", repo:"https://github.com/Raihanthec0der/BMI-Calculator" },
+  { name:"Number Guessing Game", tags:["Python"], desc:"Interactive guessing game with input validation and high/low hints.", repo:"https://github.com/Raihanthec0der/number-guessing-game" },
+];
+
+/* =========================================================================
+   RENDERING (reads only from the data above — no need to edit below
+   this line when adding or updating content)
+   ========================================================================= */
+
+// ---------------- SKILL RADAR ----------------
+const svgNS = "http://www.w3.org/2000/svg";
+const radarSvg = document.getElementById("radarSvg");
+const cx = 190, cy = 185, R = 130;
+const N = skills.length;
+const levels = 5;
+
+function pointFor(i, level){
+  const angle = (Math.PI * 2 * i / N) - Math.PI/2;
+  const r = (level/levels) * R;
+  return [cx + r*Math.cos(angle), cy + r*Math.sin(angle)];
+}
+for(let l=1; l<=levels; l++){
+  const ring = document.createElementNS(svgNS,"polygon");
+  let pts=[]; for(let i=0;i<N;i++){ pts.push(pointFor(i,l).join(",")); }
+  ring.setAttribute("points", pts.join(" "));
+  ring.setAttribute("class","radar-ring");
+  radarSvg.appendChild(ring);
+}
+skills.forEach((s,i)=>{
+  const [x,y] = pointFor(i, levels);
+  const line = document.createElementNS(svgNS,"line");
+  line.setAttribute("x1",cx); line.setAttribute("y1",cy);
+  line.setAttribute("x2",x); line.setAttribute("y2",y);
+  line.setAttribute("stroke","rgba(51,73,63,0.18)");
+  radarSvg.appendChild(line);
+});
+const poly = document.createElementNS(svgNS,"polygon");
+poly.setAttribute("points", skills.map((s,i)=>pointFor(i,s.level).join(",")).join(" "));
+poly.setAttribute("class","radar-poly");
+radarSvg.appendChild(poly);
+
+const labelEls = [];
+skills.forEach((s,i)=>{
+  const [lx,ly] = pointFor(i, levels+0.9);
+  const text = document.createElementNS(svgNS,"text");
+  text.setAttribute("x",lx); text.setAttribute("y",ly);
+  text.setAttribute("text-anchor","middle");
+  text.setAttribute("dominant-baseline","middle");
+  text.setAttribute("class","radar-axis-label");
+  text.setAttribute("tabindex","0");
+  text.setAttribute("role","button");
+  text.setAttribute("aria-label","Show detail for "+s.name);
+  text.textContent = s.name;
+  text.addEventListener("click", ()=>selectSkill(i));
+  text.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectSkill(i);} });
+  radarSvg.appendChild(text);
+  labelEls.push(text);
+
+  const [px,py] = pointFor(i,s.level);
+  const dot = document.createElementNS(svgNS,"circle");
+  dot.setAttribute("cx",px); dot.setAttribute("cy",py); dot.setAttribute("r",5);
+  dot.setAttribute("class","radar-point");
+  dot.setAttribute("tabindex","0");
+  dot.setAttribute("role","button");
+  dot.setAttribute("aria-label","Show detail for "+s.name);
+  dot.addEventListener("click", ()=>selectSkill(i));
+  radarSvg.appendChild(dot);
+});
+
+function selectSkill(i){
+  const s = skills[i];
+  labelEls.forEach((el,idx)=>el.classList.toggle("active", idx===i));
+  document.querySelectorAll(".radar-point").forEach((el,idx)=>el.classList.toggle("active", idx===i));
+  document.getElementById("skillDetail").innerHTML = `
+    <h3>${s.name}</h3>
+    <div class="lvl">Level ${s.level} / 5</div>
+    <p class="note">${s.source}</p>
+    <ul>${s.items.map(it=>`<li>${it}</li>`).join("")}</ul>
+  `;
+}
+selectSkill(0);
+
+// ---------------- CASE STUDY ENTRIES ----------------
+const entriesEl = document.getElementById("entries");
+caseStudies.forEach((e, idx)=>{
+  const el = document.createElement("div");
+  el.className = "entry";
+  const cmpBlock = e.compare ? `
+    <div class="cmp-block">
+      <div class="cmp-toggle">
+        <button class="switch" data-idx="${idx}" aria-pressed="false" aria-label="Toggle comparison view"></button>
+        <span class="cmp-state-label">${e.compare.labelA}</span>
+      </div>
+      <div class="cmp-bars" data-bars="${idx}"></div>
+      <p class="cmp-caption" data-caption="${idx}"></p>
+      <p class="cmp-source">${e.compare.source}</p>
+    </div>` : "";
+
+  el.innerHTML = `
+    <div class="entry-head" tabindex="0" role="button" aria-expanded="false">
+      <div>
+        <span class="entry-num">${e.num}</span>
+        <h3 class="entry-title">${e.title}</h3>
+        <div class="entry-tags">${e.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      </div>
+      <span class="chevron">+</span>
+    </div>
+    <div class="entry-body">
+      <div class="entry-body-inner">
+        <div class="case-grid">
+          <div class="case-field"><div class="label">Problem</div><p>${e.problem}</p></div>
+          <div class="case-field"><div class="label">Approach</div><p>${e.approach}</p></div>
+          <div class="case-field" style="grid-column:1/-1;"><div class="label">Key findings</div><ul>${e.findings.map(f=>`<li>${f}</li>`).join("")}</ul></div>
+          <div class="case-field" style="grid-column:1/-1;"><div class="label">Takeaway</div><p>${e.takeaway}</p></div>
+        </div>
+        ${cmpBlock}
+        <div class="entry-links"><a href="${e.repo}" target="_blank" rel="noopener">View repository ↗</a></div>
+      </div>
+    </div>
+  `;
+  entriesEl.appendChild(el);
+
+  const head = el.querySelector(".entry-head");
+  head.addEventListener("click", ()=>toggleEntry(el, head));
+  head.addEventListener("keydown", (ev)=>{ if(ev.key==="Enter"||ev.key===" "){ ev.preventDefault(); toggleEntry(el, head); } });
+
+  if(e.compare){
+    const barsWrap = el.querySelector(`[data-bars="${idx}"]`);
+    const captionEl = el.querySelector(`[data-caption="${idx}"]`);
+    const stateLabel = el.querySelector(".cmp-state-label");
+    const switchBtn = el.querySelector(".switch");
+
+    function renderBars(showB){
+      barsWrap.innerHTML = "";
+      const set = showB ? e.compare.barsB : e.compare.barsA;
+      set.forEach(b=>{
+        const col = document.createElement("div");
+        col.className = "cmp-bar-col";
+        col.innerHTML = `<div class="cmp-bar" style="height:${b.v}px; background:${showB ? 'var(--signal)' : 'var(--sage)'};"></div><span>${b.label}</span>`;
+        barsWrap.appendChild(col);
+      });
+      captionEl.textContent = showB ? e.compare.captionB : e.compare.captionA;
+      stateLabel.textContent = showB ? e.compare.labelB : e.compare.labelA;
+    }
+    renderBars(false);
+    let showingB = false;
+    switchBtn.addEventListener("click", ()=>{
+      showingB = !showingB;
+      switchBtn.classList.toggle("after", showingB);
+      switchBtn.setAttribute("aria-pressed", showingB);
+      renderBars(showingB);
+    });
+  }
+});
+
+function toggleEntry(el, head){
+  const isOpen = el.classList.toggle("open");
+  head.setAttribute("aria-expanded", isOpen);
+  head.querySelector(".chevron").textContent = isOpen ? "×" : "+";
+}
+
+// ---------------- SMALL BUILDS GRID ----------------
+const buildsGrid = document.getElementById("buildsGrid");
+smallBuilds.forEach(b=>{
+  const card = document.createElement("div");
+  card.className = "build-card";
+  card.innerHTML = `
+    <h4>${b.name}</h4>
+    <p>${b.desc}</p>
+    <div class="entry-tags" style="margin-bottom:10px;">${b.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    <a href="${b.repo}" target="_blank" rel="noopener">View repository ↗</a>
+  `;
+  buildsGrid.appendChild(card);
+});
+
+// ---------------- SOCIAL LINKS ----------------
+const socialList = document.getElementById("socialList");
+socialLinks.forEach(s=>{
+  const li = document.createElement("li");
+  li.innerHTML = `<a href="${s.href}" target="_blank" rel="noopener">${s.label} <span class="arrow">↗</span></a>`;
+  socialList.appendChild(li);
+});
+
+// ---------------- MINI QUIZ ----------------
+document.querySelectorAll('.quiz-mini button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const group = btn.closest('.quiz-mini');
+    const result = group.querySelector('[id$="-result"]');
+    group.querySelectorAll('button').forEach(b=>b.classList.remove('correct'));
+    if(btn.dataset.correct === "1"){
+      btn.classList.add('correct');
+      result.textContent = "Right — correlation shows a relationship, not proof of cause. Worth flagging in any write-up.";
+    } else {
+      result.textContent = "Close — a correlation like that shows a relationship, but doesn't prove discounts caused the loss on its own.";
+    }
+  });
+});
+
+// ---------------- CONTACT FORM ----------------
+const form = document.getElementById("contactForm");
+form.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("fname");
+  const email = document.getElementById("femail");
+  const msg = document.getElementById("fmsg");
+  let ok = true;
+
+  document.getElementById("err-name").textContent = "";
+  document.getElementById("err-email").textContent = "";
+  document.getElementById("err-message").textContent = "";
+
+  if(!name.value.trim()){ document.getElementById("err-name").textContent = "Add your name."; ok = false; }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailPattern.test(email.value.trim())){ document.getElementById("err-email").textContent = "That doesn't look like a valid email."; ok = false; }
+  if(msg.value.trim().length < 10){ document.getElementById("err-message").textContent = "Say a little more — at least 10 characters."; ok = false; }
+
+  const status = document.getElementById("formStatus");
+  if(ok){
+    status.textContent = "Message ready — wire this form up to Formspree, Netlify Forms, or your own endpoint to actually send it.";
+    form.reset();
+  } else {
+    status.textContent = "";
+  }
+});
+</script>
+
+</body>
+</html>
