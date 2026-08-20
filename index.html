@@ -14,6 +14,7 @@
     --teal:#2FD9C4;
     --purple:#A78BFA;
     --pink:#F472B6;
+    --amber:#FBBF24;
     --text:#E8ECF3;
     --text-dim:#8B93A5;
     --text-dimmer:#5C6577;
@@ -107,6 +108,8 @@
   .section-tag::before{content:"";width:22px;height:1px;background:var(--teal);}
   h2.section-title{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,5vw,36px);margin:0 0 16px;letter-spacing:-0.01em;}
   .section-sub{color:var(--text-dim);font-size:15px;max-width:60ch;margin-bottom:28px;}
+  .about-text p{color:var(--text-dim);font-size:15.5px;line-height:1.75;max-width:62ch;margin:0 0 20px;}
+  .about-text p:last-child{margin-bottom:0;}
 
   /* skill pills */
   .pill-row{display:flex;flex-wrap:wrap;gap:10px;}
@@ -150,6 +153,10 @@
     padding:28px 24px;margin-bottom:22px;position:relative;overflow:hidden;
   }
   .proj-num{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:16px;}
+  .featured-badge{
+    position:absolute;top:24px;right:24px;font-family:var(--font-mono);font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;border:1px solid;border-radius:12px;padding:4px 10px;
+  }
   .proj-icon{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
   .proj-icon svg{width:28px;height:28px;}
   .proj-title{font-family:var(--font-display);font-weight:700;font-size:21px;margin:0 0 6px;}
@@ -217,7 +224,7 @@
   <div class="wrap">
     <div class="mono">R<span style="color:var(--teal);">.</span></div>
     <ul class="navlinks">
-      <li><a href="#about">About</a></li>
+      <li><a href="#about-me">About</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -256,9 +263,22 @@
   </div>
 </header>
 
-<section id="about">
+<section id="about-me">
   <div class="wrap">
-    <p class="section-tag">01 · About</p>
+    <p class="section-tag">01 · About Me</p>
+    <h2 class="section-title">About <span class="grad">Me</span></h2>
+    <div class="about-text">
+      <p>My background in mathematics gave me a strong foundation in logic, patterns, and methodical problem-solving, which sparked my fascination with data. Over time, that foundation evolved into a passion for transforming data into meaningful insights and knowledge.</p>
+      <p>I am currently expanding my expertise in Data Analytics, Data Science, and Artificial Intelligence, working with Python, SQL, Pandas, NumPy, Excel, and Power BI. I enjoy exploring complex datasets, uncovering patterns, and translating analytical findings into clear, practical solutions.</p>
+      <p>I believe data science is more than technology; it is a way of thinking. It means asking better questions, challenging assumptions, and making decisions grounded in evidence.</p>
+      <p>As I continue learning and building real-world projects, my long-term goal is to create innovative, data-driven solutions with measurable impact.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="section-tag">02 · Skillset</p>
     <h2 class="section-title">Skillset &amp; tools</h2>
     <p class="section-sub">What I actually work with — some from shipped projects, some from certificates I'm still building on.</p>
     <div class="pill-row" id="skillPills"></div>
@@ -273,7 +293,7 @@
 
 <section id="education">
   <div class="wrap">
-    <p class="section-tag">02 · Education &amp; Learning</p>
+    <p class="section-tag">03 · Education &amp; Learning</p>
     <h2 class="section-title">Where the skills come from</h2>
     <div class="timeline" id="eduTimeline"></div>
   </div>
@@ -281,7 +301,7 @@
 
 <section id="work">
   <div class="wrap">
-    <p class="section-tag">03 · Work</p>
+    <p class="section-tag">04 · Work</p>
     <div class="gallery-head">
       <span class="count-badge" id="projCount">4</span>
       <span class="count-label">Data Analysis Projects</span>
@@ -297,7 +317,7 @@
 
 <section id="contact">
   <div class="wrap">
-    <p class="section-tag">04 · Get in touch</p>
+    <p class="section-tag">05 · Get in touch</p>
     <h2 class="contact-title">CONTACT</h2>
     <div class="contact-grid">
       <div>
@@ -354,6 +374,31 @@ const education = [
 // Add a new object here to add a project card. `color` sets the accent
 // (teal / purple / pink). `icon` picks a built-in SVG icon.
 const projects = [
+  {
+    color:"amber", icon:"segment", featured:true,
+    title:"Predicting churn risk in e-commerce customers",
+    sub:"E-Commerce Customer Churn Analysis",
+    tags:["Python","Pandas","NumPy","Matplotlib","Scikit-learn","Jupyter Notebook"],
+    repo:"https://github.com/Raihanthec0der/E-Commerce-Customer-Churn-Analysis",
+    problem:"E-commerce companies lose recurring revenue when customers quietly stop coming back. The project asks: what customer behaviors and characteristics are actually associated with churn?",
+    approach:"An end-to-end workflow: data quality checks (duplicates, missing values, an explicit age-validity rule), exploratory data analysis across engagement, purchase behavior, and service interactions, then two classification models built inside a pipeline to avoid data leakage — numeric gaps imputed with the median, categorical gaps with the most frequent category.",
+    findings:[
+      "EDA covered churn distribution, numerical features vs. churn, feature correlations, engagement, purchase recency, cart abandonment, customer-service interactions, gender, country, and signup quarter.",
+      "Dataset: 50,000 customers, 25 features, target = Churned, spanning the USA, UK, Germany, Canada, India, Japan, and France (Kaggle — Ecommerce Customer Behavior Dataset, by Dhairyajeet Singh).",
+      "Two models compared: Logistic Regression as an interpretable baseline, Random Forest to capture nonlinear relationships and feature interactions.",
+      "Evaluated with accuracy, precision, recall, F1, ROC-AUC, confusion matrix, ROC and precision-recall curves, and 5-fold cross-validation — exact scores are in the notebook rather than restated here, since the README documents the method, not the numbers.",
+      "Model probabilities were converted into Low / Medium / High churn-risk segments, then compared to understand behavior differences across risk levels."
+    ],
+    takeaway:"The most useful output wasn't a single accuracy number — it was a risk-ranked customer list a retention team could actually act on, plus an honest note that correlations here are observational, not proof of what causes churn.",
+    extended:{
+      objective:"Quantify overall churn rate, surface the behaviors most associated with it, and turn model output into a risk ranking a business team can prioritize — rather than a black-box prediction alone.",
+      dataset:"Kaggle — Ecommerce Customer Behavior Dataset (Dhairyajeet Singh): 50,000 customers, 25 numerical and categorical features, target column Churned, covering multiple countries.",
+      ml:"Logistic Regression (interpretable baseline) and Random Forest (nonlinear relationships, feature interactions), both trained inside a preprocessing pipeline with a stratified train/test split to keep the churn class ratio consistent.",
+      evaluation:"Accuracy, Precision, Recall, F1-score, ROC-AUC, confusion matrix, ROC curve, precision-recall curve, and 5-fold cross-validation. Specific scores live in the notebook — not restated here to avoid misquoting them.",
+      segmentation:"Predicted churn probabilities were bucketed into Low, Medium, and High risk groups, which were then profiled against engagement and purchase behavior to see how each tier actually differs.",
+      insights:"Suggested actions from the analysis: prioritize high-risk customers for retention campaigns, treat declining engagement as an early-warning signal, investigate cart-abandonment and service friction, use purchase recency/frequency for re-engagement, and personalize offers instead of discounting everyone — validated through real experiments before being treated as causal."
+    }
+  },
   {
     color:"teal", icon:"trend",
     title:"Where sales profitability breaks down",
@@ -470,11 +515,13 @@ const ICONS = {
   grid: '<rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="13" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="4" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/><rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2" fill="none"/>',
   pulse: '<path d="M3 12h4l2 7 4-14 2 7h6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
   filter: '<path d="M4 5h16l-6 8v6l-4-2v-4z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>',
+  segment: '<rect x="4" y="14" width="4" height="6" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><rect x="10" y="9" width="4" height="11" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><rect x="16" y="4" width="4" height="16" rx="1" stroke="currentColor" stroke-width="2" fill="none"/>',
 };
 const COLOR_MAP = {
   teal:{bg:"rgba(47,217,196,0.12)", fg:"var(--teal)"},
   purple:{bg:"rgba(167,139,250,0.12)", fg:"var(--purple)"},
   pink:{bg:"rgba(244,114,182,0.12)", fg:"var(--pink)"},
+  amber:{bg:"rgba(251,191,36,0.12)", fg:"var(--amber)"},
 };
 
 // project gallery
@@ -486,7 +533,17 @@ projects.forEach((p, idx)=>{
   const card = document.createElement("div");
   card.className = "proj-card";
   card.style.borderTopColor = c.fg;
+  const ext = p.extended;
+  const extendedFields = ext ? `
+        <div class="pd-field"><div class="lbl">Objective</div><p>${ext.objective}</p></div>
+        <div class="pd-field"><div class="lbl">Dataset</div><p>${ext.dataset}</p></div>
+        <div class="pd-field"><div class="lbl">Machine learning</div><p>${ext.ml}</p></div>
+        <div class="pd-field"><div class="lbl">Model evaluation</div><p>${ext.evaluation}</p></div>
+        <div class="pd-field"><div class="lbl">Risk segmentation</div><p>${ext.segmentation}</p></div>
+        <div class="pd-field"><div class="lbl">Business insights</div><p>${ext.insights}</p></div>
+  ` : "";
   card.innerHTML = `
+    ${p.featured ? `<span class="featured-badge" style="color:${c.fg}; border-color:${c.fg};">Featured</span>` : ""}
     <div class="proj-num" style="color:${c.fg};">${num}</div>
     <div class="proj-icon" style="background:${c.bg}; color:${c.fg};"><svg viewBox="0 0 24 24">${ICONS[p.icon]}</svg></div>
     <h3 class="proj-title">${p.title}</h3>
@@ -501,6 +558,7 @@ projects.forEach((p, idx)=>{
         <div class="pd-field"><div class="lbl">Problem</div><p>${p.problem}</p></div>
         <div class="pd-field"><div class="lbl">Approach</div><p>${p.approach}</p></div>
         <div class="pd-field"><div class="lbl">Key findings</div><ul>${p.findings.map(f=>`<li>${f}</li>`).join("")}</ul></div>
+        ${extendedFields}
         <div class="pd-field"><div class="lbl">Takeaway</div><p>${p.takeaway}</p></div>
       </div>
     </div>
